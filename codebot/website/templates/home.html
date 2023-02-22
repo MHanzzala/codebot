@@ -1,6 +1,4 @@
-{% extends 'base.html' %} 
-{% block content %}
- {% if code %}
+{% extends 'base.html' %} {% block content %} {% if code %}
 
 <pre>
     <code class=" line-numbers language-{{ lang }}">
@@ -18,7 +16,7 @@
     <textarea
       class="form-control"
       name="code"
-      placeholder="Have AI fix my Code...."
+      placeholder="Have AI fix my Code."
       rows="3"
     ></textarea>
     <br />
@@ -31,11 +29,10 @@
     <br />
     <br />
   </div>
-  <button type="button" class="btn btn-secondary">Done</button>
+  <button type="submit" class="btn btn-success">Done</button>
 </form>
 
 <br />
-
 
 {% else %}
 
@@ -70,7 +67,7 @@ else:
     <br />
     <br />
   </div>
-  <button type="button" class="btn btn-outline-success">Success</button>
+  <button type="submit" class="btn btn-success">Done</button>
 </form>
 
 <br />
