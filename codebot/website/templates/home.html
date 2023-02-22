@@ -1,7 +1,43 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} 
 {% block content %}
+ {% if code %}
 
+<pre>
+    <code class=" line-numbers language-{{ lang }}">
+    {{code}}
+
+    </code>
+    </pre>
+
+<br /><br />
+
+<form method="POST" action="{% url 'home' %}">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <textarea
+      class="form-control"
+      name="code"
+      placeholder="Have AI fix my Code...."
+      rows="3"
+    ></textarea>
+    <br />
+    <select class="form-select" name="lang">
+      <option selected>Select your Programming Language</option>
+      {% for lang in lang_list %}
+      <option value="{{ lang }}">{{ lang }}</option>
+      {% endfor %}
+    </select>
+    <br />
+    <br />
+  </div>
+  <button type="button" class="btn btn-secondary">Done</button>
+</form>
+
+<br />
+
+
+{% else %}
 
 <pre>
 <code class=" line-numbers language-python">
@@ -12,8 +48,31 @@ else:
 </code>
 </pre>
 
+<br /><br />
 
-{% endblock %}
+<form method="POST" action="{% url 'home' %}">
+  {% csrf_token %}
 
+  <div class="mb-3">
+    <textarea
+      class="form-control"
+      name="code"
+      placeholder="Have AI fix my Code...."
+      rows="3"
+    ></textarea>
+    <br />
+    <select class="form-select" name="lang">
+      <option selected>Select your Programming Language</option>
+      {% for lang in lang_list %}
+      <option value="{{ lang }}">{{ lang }}</option>
+      {% endfor %}
+    </select>
+    <br />
+    <br />
+  </div>
+  <button type="button" class="btn btn-outline-success">Success</button>
+</form>
 
-    
+<br />
+
+{% endif %} {% endblock %}
