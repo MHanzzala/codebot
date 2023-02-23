@@ -9,7 +9,7 @@
 
 <br /><br />
 
-<form method="POST" action="{% url 'home' %}">
+<form method="POST" action="{% url 'suggest' %}">
   {% csrf_token %}
 
   <div class="mb-3">
@@ -49,14 +49,14 @@ else:
 
 <br /><br />
 
-<form method="POST" action="{% url 'home' %}">
+<form method="POST" action="{% url 'suggest' %}">
   {% csrf_token %}
 
   <div class="mb-3">
     <textarea
       class="form-control"
       name="code"
-      placeholder="Have AI fix my Code...."
+      placeholder="Write any code you want"
       rows="3"
     ></textarea>
     <br />
