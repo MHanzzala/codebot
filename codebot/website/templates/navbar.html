@@ -1,13 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'home' %}"
       ><img
-        src="static/img/programming_logo.svg"
+        src="/static/img/final_logo_for_codebot.svg"
         alt="Logo"
         width="50"
         height="50"
+        type="image/icon type"
     /></a>
-    <a class="navbar-brand" href="#">AI CodeBot</a>
+    <a class="navbar-brand" href="{% url 'home' %}">AI CodeBot</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -22,10 +23,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'suggest' %}">Suggest</a>
+          <a class="nav-link" href="{% url 'home' %}">Fix</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">Fix</a>
+          <a class="nav-link" href="{% url 'suggest' %}">Suggest</a>
         </li>
       </ul>
     </div>

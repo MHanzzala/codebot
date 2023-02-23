@@ -59,7 +59,7 @@ def suggest(request):
             return render(request, 'suggest.html', {'lang_list': lang_list, 'response': code, 'code': code, 'lang': lang})
         else:
             # OpenAI Key
-            openai.api_key = "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"
+            openai.api_key = "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"
             # Create OpenAI Instance
             openai.Model.list()
             # Make an OpenAI Request
