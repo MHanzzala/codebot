@@ -4,6 +4,8 @@ import openai
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
+from .models import Code
+
 
 # Create your views here.
 
@@ -23,7 +25,7 @@ def home(request):
             return render(request, 'home.html', {'lang_list': lang_list, 'response': code, 'code': code, 'lang': lang})
         else:
             # OpenAI Key
-            openai.api_key = "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"
+            openai.api_key = "***************ENTER YOURS OPENAI API KEY***************"
             # Create OpenAI Instance
             openai.Model.list()
             # Make an OpenAI Request
@@ -39,6 +41,10 @@ def home(request):
                 )
                 # parse the response
                 response = (response["choices"][0]["text"]).strip()
+                # Save the response to databases...
+                record = Code(question=code, code_answer=response,
+                              language=lang, user=request.user)
+                record.save()
                 return render(request, 'home.html', {'lang_list': lang_list, 'response': response, 'lang': lang})
 
             except Exception as e:
@@ -62,7 +68,7 @@ def suggest(request):
             return render(request, 'suggest.html', {'lang_list': lang_list, 'response': code, 'code': code, 'lang': lang})
         else:
             # OpenAI Key
-            openai.api_key = "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"
+            openai.api_key = "***************ENTER YOURS OPENAI API KEY***************"
             # Create OpenAI Instance
             openai.Model.list()
             # Make an OpenAI Request
@@ -78,6 +84,10 @@ def suggest(request):
                 )
                 # parse the response
                 response = (response["choices"][0]["text"]).strip()
+                # save the response to  database
+                record = Code(question=code, code_answer=response,
+                              language=lang, user=request.user)
+                record.save()
                 return render(request, 'suggest.html', {'lang_list': lang_list, 'response': response, 'lang': lang})
 
             except Exception as e:
@@ -109,18 +119,34 @@ def logout_user(request):
 
 
 def register_user(request):
-	if request.method == "POST":
-		form = SignUpForm(request.POST)
-		if form.is_valid():
-			form.save()
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password1']
-			user = authenticate(username=username, password=password)
-			login(request, user)
-			messages.success(request, "You have been registered successfully.")
-			return redirect('home')
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, "You have been registered successfully.")
+            return redirect('home')
 
-	else:
-		form = SignUpForm()
+    else:
+        form = SignUpForm()
 
-	return render(request, 'register.html', {"form": form})
+    return render(request, 'register.html', {"form": form})
+
+
+def history(request):
+    if request.user.is_authenticated:
+        code = Code.objects.filter(user_id=request.user.id)
+        return render(request, 'history.html', {"code": code})
+    else:
+        messages.success(request, "You must be logged in to view history ")
+        return redirect('home')
+
+
+def delete_history(request, history_id):
+    history = Code.objects.get(pk=history_id)
+    history.delete()
+    messages.success(request, "deleted successfully")
+    return redirect('history')
